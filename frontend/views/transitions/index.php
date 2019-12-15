@@ -4,6 +4,7 @@
 
 /* @var $atom \common\models\Atom */
 /* @var $model \common\models\Transition */
+/* @var $dataProvider $model \common\models\Transition */
 
 use yii\helpers\Html;
 use yii\grid\GridView;

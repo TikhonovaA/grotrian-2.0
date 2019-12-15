@@ -102,6 +102,21 @@ AppAsset::register($this);
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach;?>
+                        <?php foreach ($this->params['isotopes'] as $isotope):?>
+                                <?php if ($isotope->ID == Yii::$app->request->get('id')):?>
+                                    <a class="ion" href="<?=$isotope->ID?>">
+                                        <button class="button white selected" type="button" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span><?=$this->params['atom']->periodicTable->ABBR?></span><sup><?=$isotope->MASS_NUMBER?></sup>
+                                        </button>
+                                    </a>
+                                <?php else: ?>
+                                    <a class="ion" href="<?=$isotope->ID?>">
+                                        <button class="button white" type="button" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span><?=$this->params['atom']->periodicTable->ABBR?></span><sup><?=$isotope->MASS_NUMBER?></sup>
+                                        </button>
+                                    </a>
+                                <?php endif; ?>
+                        <?php endforeach;?>
                     </nav>
                 </div>
             <?php endif; ?>
