@@ -32,8 +32,9 @@ class LevelsController extends MainController
 
         $dataProvider = new ActiveDataProvider([
             'query' => Level::find()
-                ->where(['ID_ATOM' => $id])
-                ->orderBy(['ENERGY' => SORT_ASC]),
+                ->with('source')
+                ->where(['ID_ATOM' => $id]),
+                //->orderBy(['ENERGY' => SORT_ASC]),
             'pagination' => [
                 'pageSize' => 25,
             ],

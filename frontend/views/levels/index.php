@@ -44,7 +44,6 @@ $this->title = Yii::t('app', 'Atomic levels - {Z}', ['Z' => $atom->periodicTable
         ],
         [
             'label' => Yii::t('level', 'Source'),
-            'attribute' => 'source',
             'format' => 'html',
             'value' => function($model) {
                 $result = '';

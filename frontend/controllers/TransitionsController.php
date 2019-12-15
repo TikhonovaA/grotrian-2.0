@@ -32,6 +32,7 @@ class TransitionsController extends MainController
 
         $dataProvider = new ActiveDataProvider([
             'query' => Transition::find()
+                ->with('source', 'lowerLevel', 'upperLevel')
                 ->where(['ID_ATOM' => $id]),
 //                ->orderBy(['ENERGY' => SORT_ASC]),
             'pagination' => [

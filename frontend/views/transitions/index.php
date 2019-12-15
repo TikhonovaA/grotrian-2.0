@@ -23,7 +23,6 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
         ],
         [
             'label' => Yii::t('transitions', 'Lower level'),
-            'attribute' => 'lowerLevel',
             'format' => 'html',
             'value' => function($model) {
                 $result = '';
@@ -38,7 +37,6 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
         ],
         [
             'label' => Yii::t('transitions', 'Upper level'),
-            'attribute' => 'upperLevel',
             'format' => 'html',
             'value' => function($model) {
                 $result = '';
@@ -85,7 +83,6 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
         ],
         [
             'label' => Yii::t('transitions', 'Source'),
-            'attribute' => 'source',
             'format' => 'html',
             'value' => function($model) {
                 $result = '';
