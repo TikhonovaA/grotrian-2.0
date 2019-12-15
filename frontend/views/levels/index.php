@@ -33,7 +33,8 @@ $this->title = Yii::t('app', 'Atomic levels - {Z}', ['Z' => $atom->periodicTable
             'format' => 'html',
         ],
         [
-            'header' => Yii::t('level', 'Energy (cm<sup>-1</sup>)'),
+            'label' => Yii::t('level', 'Energy (cm<sup>-1</sup>)'),
+            'encodeLabel' => false,
             'attribute' => 'ENERGY',
             'format' => 'ntext',
         ],

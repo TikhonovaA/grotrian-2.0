@@ -50,7 +50,8 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
             }
         ],
         [
-            'header' => Yii::t('transitions', 'Wavelength [<i>Å</i>]'),
+            'label' => Yii::t('transitions', 'Wavelength [<i>Å</i>]'),
+            'encodeLabel' => false,
             'attribute' => 'WAVELENGTH',
             'format' => 'ntext',
         ],
@@ -60,12 +61,14 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
             'format' => 'ntext',
         ],
         [
-            'header' => Yii::t('transitions', '<i>f<sub>ik</sub></i>'),
+            'label' => Yii::t('transitions', '<i>f<sub>ik</sub></i>'),
+            'encodeLabel' => false,
             'attribute' => 'OSCILLATOR_F',
             'format' => 'ntext',
         ],
         [
-            'header' => Yii::t('transitions', 'A<sub><i>ki</i></sub><br>[<i>10<sup>8</sup>sec<sup>-1</sup></i>]'),
+            'label' => Yii::t('transitions', 'A<sub><i>ki</i></sub><br>[<i>10<sup>8</sup>sec<sup>-1</sup></i>]'),
+            'encodeLabel' => false,
             'attribute' => 'PROBABILITY',
             'format' => 'ntext',
             'value' => function($model) {
@@ -77,7 +80,8 @@ $this->title = Yii::t('app', 'Atomic transitions - {Z}', ['Z' => $atom->periodic
             }
         ],
         [
-            'header' => Yii::t('transitions', 'Excitation cross section <br> Q<sub>max</sub>* 10<sup>18</sup>, <i>cm<sup>2</sup></i>'),
+            'label' => Yii::t('transitions', 'Excitation cross section <br> Q<sub>max</sub>* 10<sup>18</sup>, <i>cm<sup>2</sup></i>'),
+            'encodeLabel' => false,
             'attribute' => 'CROSSECTION',
             'format' => 'html',
         ],
