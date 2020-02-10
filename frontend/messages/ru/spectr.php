@@ -8,4 +8,7 @@ return [
     'Scale' => 'Масштаб',
     'Sensibility' => 'Чувствительность',
     'Bar Chart' => 'Гистограмма',
+    'Intensity' => 'Интенсивность',
+    'Wavelength' => 'Длина волны',
+    'Levels' => 'Уровни',
 ];

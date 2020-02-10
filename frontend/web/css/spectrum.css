@@ -88,3 +88,13 @@ svg\:svg {
 .brake{
     margin-top: 10px;
 }
+
+#ruler {
+    background: #fff !important;
+    color: #000;
+    height: 65px !important;
+    font-size: 18px;
+}
+
+
+

@@ -64,8 +64,14 @@ $this->title = Yii::t('app', 'Spectrogram - {Z}', ['Z' => $atom_name]);
 
 <?php
 $transitions_list = json_encode($transitions_list);
+$w_l = Yii::t('spectr', 'Wavelength');
+$lvl = Yii::t('spectr', 'Levels');
+$intens = Yii::t('spectr', 'Intensity');
 
 $js = <<< JS
+var lvl = "$lvl",
+w_l = "$w_l",
+intens = "$intens";
 var transitions_list = $transitions_list;
 var max_logbase = 20,
     min_logbase = 1,
@@ -111,13 +117,7 @@ function init() {
         transitions_list.forEach(function (transition) {
             l = Number(transition.WAVELENGTH);
             let i = Number(transition.INTENSITY);
-            /*lower_level_config_original = split[2],
-            lower_level_config = split[2].replace(/@\{([^\}\{]*)\}/gi,"<sup>$1</sup>").replace(/~\{([^\}\{]*)\}/gi,"<sub>$1</sub>").replace(/\s/gi,""),
-            lower_level_term = split[3],
-            upper_level_config_original = split[4],
-            upper_level_config = split[4].replace(/@\{([^\}\{]*)\}/gi,"<sup>$1</sup>").replace(/~\{([^\}\{]*)\}/gi,"<sub>$1</sub>").replace(/\s/gi,""),
-            upper_level_term = split[5];*/
-            
+           
             if (l > min && l < max) {
                 let y1 = 0;
                 let newcolor = "rgb(" + transition.COLOR.R + "," + transition.COLOR.G + "," + transition.COLOR.B + ")";
@@ -132,6 +132,8 @@ function init() {
                 lines_data[id] = new Object();
                 lines_data[id]['l'] = l;
                 lines_data[id]['i'] = i;
+                lines_data[id]['lower-level-term'] = transition.LOWER_TERM;
+                lines_data[id]['upper-level-term'] = transition.UPPER_TERM;
                 lines_data[id]['color'] = "rgb(" + transition.COLOR.R + "," + transition.COLOR.G + "," + transition.COLOR.B + ")";
                 
                 var x = Math.round(((l - min)/ 10 * zoom)*100)/100;
@@ -163,6 +165,23 @@ function init() {
     $('#preview').prepend(map_str + "</svg>");
 
     $('#map_now').css('width', map_width() + 'px');
+    
+    $('#svg_wrapper .svg line').hover(
+        function() {
+            let id = $(this).attr('id');
+            $('#line_info').empty();
+            $('#line_info').append(w_l + ': <b>' + lines_data[id]['l'] + ' &#8491;</b> ' + lvl +': '
+                + lines_data[id]['lower-level-term']
+                +' - ' +   lines_data[id]['upper-level-term']
+                +'. ' + intens + ': ' + lines_data[id]['i']
+            );
+            $(this).attr('stroke-width', 2);
+        },
+        function() {
+            $(this).attr('stroke-width', 1);
+            $('#line_info').empty();
+        }
+    );
     
     $('#svg_wrapper').scroll(function() {
         $('#map_now').css('left', Math.round(this.scrollLeft / map_now / zoom * 100)/100 + 'px');
@@ -229,7 +248,6 @@ function fadecolor(color, normal_intensity, logbase)
 
 function init_all(){
     init();
-    init_ruler(get_zoom(),Number($('#min').val()),Number($('#max').val()),'');
     //init_serie_selector();
 }
 
