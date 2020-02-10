@@ -5,4 +5,5 @@ return [
     'Elements' => 'Элементы',
     'Levels' => 'Уровни',
     'Transitions' => 'Переходы',
+    'Spectra' => 'Спектры',
 ];

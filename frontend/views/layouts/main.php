@@ -42,6 +42,7 @@ AppAsset::register($this);
             ['label' => Yii::t('site','Elements'), 'url' => ['/element/'.$id ]],
             ['label' => Yii::t('site','Levels'), 'url' => ['/levels/'.$id ]],
             ['label' => Yii::t('site','Transitions'), 'url' => ['/transitions/'.$id  ]],
+            ['label' => Yii::t('site','Spectra'), 'url' => ['/spectra/'.$id  ]],
         ];
 
         $menuItems[] = '<li style="padding: 15px 0">' .MultiLanguageWidget::widget([]) . '</li>';

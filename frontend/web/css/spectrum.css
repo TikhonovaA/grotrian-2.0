@@ -1,0 +1,90 @@
+#toolbar {
+    width:720px;
+    height:120px;
+    padding:10px;
+    margin:0 auto;
+    background:#eee;
+    border-radius:6px;
+    position: relative;
+}
+#toolbar div {
+    float:left;
+    margin-right:20px;
+}
+#toolbar .top_div {
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+#zoom_container {
+    text-align: center;
+}
+.bluebtn{
+    padding:5px;
+    border:none;
+    background: #428BCA;
+    border:1px solid #357EBD;
+    border-radius: 4px;
+    color:#fff;
+    cursor:pointer;
+}
+.bluebtn.active {
+    background: #3071A9;
+    border: 1px solid #285E8E;
+}
+#line_info, #line_info_2 {
+    height:20px;
+    width:1000px;
+    margin:10px auto 0 auto;
+}
+
+svg {
+    display: block;
+}
+
+.svg_wrapper, #svg_wrapper_2 {
+    position:relative;
+    height:215px;
+    overflow:auto;
+    width:1000px;
+    margin:0 auto;
+}
+.svg_wrapper svg, #map svg, #svg_wrapper_2 svg, #map_2 svg {
+    background:#000;
+    height:120px;
+}
+#map, #map_2 {
+    margin-top:30px;
+    position: relative;
+    width:1000px;
+    margin:0 auto;
+}
+#map svg, #map_2 svg {
+    width:100%;
+}
+#map_now, #map_now_2 {
+    position:absolute;
+    top:0;
+    left:0;
+    height:120px;
+    background: rgba(0, 191, 255, 0.4);
+}
+#preview, #preview_2 {
+    position:relative;
+    height:150px;
+    overflow:auto;
+    width:1000px;
+    margin:30px auto;
+}
+svg\:svg {
+    display: none;
+
+}
+#min, #max {
+    font-size: 16px;
+    width:100px;
+}
+.brake{
+    margin-top: 10px;
+}
