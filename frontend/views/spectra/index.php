@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 /* @var $atom \common\models\Atom */
+/* @var $ion string */
 /* @var $transitions_list \common\models\Transition */
 /* @var $atom_name \common\models\Atom->periodicTable->ABBR */
 
@@ -67,11 +68,35 @@ $transitions_list = json_encode($transitions_list);
 $w_l = Yii::t('spectr', 'Wavelength');
 $lvl = Yii::t('spectr', 'Levels');
 $intens = Yii::t('spectr', 'Intensity');
+$allLines = Yii::t('spectr', 'All lines');
+$lymanSeries = Yii::t('spectr', 'Lyman series');
+$balmerSeries = Yii::t('spectr', 'Balmer series');
+$paschenSeries = Yii::t('spectr', 'Paschen series');
+$brackettSeries = Yii::t('spectr', 'Brackett series');
+$pfundSeries = Yii::t('spectr', 'Pfund series');
+$humphreysSeries = Yii::t('spectr', 'Humphreys series');
+$principalSeries = Yii::t('spectr', 'Principal series');
+$sharpSeries = Yii::t('spectr', 'Sharp series');
+$diffuseSeries = Yii::t('spectr', 'Diffuse series');
+$fundamentalSeries = Yii::t('spectr', 'Fundamental series');
 
 $js = <<< JS
 var lvl = "$lvl",
-w_l = "$w_l",
-intens = "$intens";
+    w_l = "$w_l",
+    intens = "$intens",
+    atom_name = "$atom_name",
+    allLines = "$allLines",
+    lymanSeries = "$lymanSeries",
+    balmerSeries = "$balmerSeries",
+    paschenSeries = "$paschenSeries",
+    brackettSeries = "$brackettSeries",
+    pfundSeries = "$pfundSeries",
+    humphreysSeries = "$humphreysSeries",
+    principalSeries = "$principalSeries",
+    sharpSeries = "$sharpSeries",
+    diffuseSeries = "$diffuseSeries",
+    fundamentalSeries = "$fundamentalSeries",
+    ion = "$ion";
 var transitions_list = $transitions_list;
 var max_logbase = 20,
     min_logbase = 1,
@@ -134,6 +159,8 @@ function init() {
                 lines_data[id]['i'] = i;
                 lines_data[id]['lower-level-term'] = transition.LOWER_TERM;
                 lines_data[id]['upper-level-term'] = transition.UPPER_TERM;
+                lines_data[id]['upper-level-term-original'] = transition.upperLevel.CONFIG;
+                lines_data[id]['lower-level-term-original'] = transition.lowerLevel.CONFIG;
                 lines_data[id]['color'] = "rgb(" + transition.COLOR.R + "," + transition.COLOR.G + "," + transition.COLOR.B + ")";
                 
                 var x = Math.round(((l - min)/ 10 * zoom)*100)/100;
@@ -208,9 +235,83 @@ function init() {
         $(this).css('cursor', 'default');
         isDrag = 0;
     });
-
+    
+    init_serie_selector();
 }
 
+function init_serie_selector()
+{
+    if (atom_name == "H" || atom_name == "D" || atom_name == "T") {
+        let series = [];
+        for (let i = 1; i < lines_data.length; i++) {
+            let llc = lines_data[i]['lower-level-term'];
+            if (series.indexOf(llc[0]) == -1) series.push(llc[0]);
+        }
+        series.sort();
+        $('#series').empty();
+        $('<select>', {'id': 'serieSelector', 'change': function(event){selectserie(atom_name, event.target.value)}}).appendTo($('#series'));
+        $('<option>', {'value': 'all', 'text': allLines}).appendTo($('#serieSelector'));
+        for (let j = 0; j < series.length; j++) {
+            let text = series[j];
+            switch (series[j]){
+                case "1": text = lymanSeries; break;
+                case "2": text = balmerSeries; break;
+                case "3": text = paschenSeries; break;
+                case "4": text = brackettSeries; break;
+                case "5": text = pfundSeries; break;
+                case "6": text = humphreysSeries; break;
+                default: text = "n' = " + series[j];
+            }
+            $('<option>', {'value': series[j], 'text': text + " (n' = " + series[j] +")"}).appendTo($('#serieSelector'));
+        }
+    }
+    let element = atom_name + " " + ion;
+    if (element == "Na I" || element == "Li I" || element == "K I" || element == "Rb I" || element == "Cs I" || element == "Fr I"/* || e_count == "1"*/)
+    {
+        $('#series').empty();
+        $('<select>', {'id': 'serieSelector', 'change': function(event){selectserie(element, event.target.value)}}).appendTo($('#series'));
+        $('<option>', {'value': 'all', 'text': allLines}).appendTo($('#serieSelector'));
+        $('<option>', {'value': 'sp', 'text': principalSeries  + " (ns - n'p)"}).appendTo($('#serieSelector'));
+        $('<option>', {'value': 'ps', 'text': sharpSeries + " (np - n's)"}).appendTo($('#serieSelector'));
+        $('<option>', {'value': 'pd', 'text': diffuseSeries + " (np - n'd)"}).appendTo($('#serieSelector'));
+        $('<option>', {'value': 'df', 'text': fundamentalSeries + " (nd - n'f)"}).appendTo($('#serieSelector'));
+    }
+}
+function selectserie(element, serie)
+{
+    for (let k = 1; k < lines_data.length; k++) {//сброс длины палочек или затемнения при смене типа отображения
+        document.getElementById(k).style.display = "";
+        document.getElementById("full-" + k).style.display="";
+    }
+    //rule_intensity();
+
+    if ((element == "H" || element == "D" || element == "T")&& serie!='all')
+    {
+        for (let k = 1; k < lines_data.length; k++) {
+            let llc = lines_data[k]['lower-level-term'];
+            if (llc[0] != serie) {
+                document.getElementById(k).style.display = "none";
+                document.getElementById("full-" + k).style.display = "none";
+            }
+        }
+    }
+    if ((element == "Na I" || element == "Li I" || element == "K I" || element == "Rb I" || element == "Cs I" || element == "Fr I"
+            /* || e_count == "1"*/) && serie!='all') {
+
+        for (let k = 1; k < lines_data.length; k++) {
+            let llc = lines_data[k]['lower-level-term-original'];
+            let ulc = lines_data[k]['upper-level-term-original'];
+            //var ll = llc[llc.search( /[a-z][^a-z@]*$/ )];
+            let ul = ulc[ulc.search( /[a-z][^a-z@]*$/ )];
+            let g_base_level = lines_data[1]['lower-level-term-original'];
+            if (llc != g_base_level.substr(0, g_base_level.length -1) + serie[0]
+                || ulc.substr(0, ulc.search( /\d+[a-z][^a-z@]*$/ )) + "n" + ulc.substr(ulc.search( /[a-z][^a-z@]*$/ ), 1) != g_base_level.substr(0, g_base_level.length -2) + "n" + serie[1]) {
+                document.getElementById(k).style.display = "none";
+                document.getElementById("full-" + k).style.display = "none";
+            }
+        }
+    }
+}
 
 function map_width(){
     let max = Number($('#max').val());

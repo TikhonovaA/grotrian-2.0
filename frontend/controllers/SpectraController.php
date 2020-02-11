@@ -27,20 +27,9 @@ class SpectraController extends MainController
         }
 
         $atom_name = $atom->periodicTable->ABBR;
+        $ion = Atom::numberToRoman(intval($atom->IONIZATION) + 1);
         $transitions = Transition::find()->with('lowerLevel', 'upperLevel')->where(['ID_ATOM' => $id])->all();
-
-        $transitions_list = ArrayHelper::toArray($transitions, [
-            'app\models\Post' => [
-                'id',
-                'title',
-                // the key name in array result => property name
-                'createTime' => 'created_at',
-                // the key name in array result => anonymous function
-                'length' => function ($post) {
-                    return strlen($post->content);
-                },
-            ],
-        ]);
+        $transitions_list = ArrayHelper::toArray($transitions, []);
 
         $index = 0;
         foreach ($transitions_list as &$transition){
@@ -61,6 +50,8 @@ class SpectraController extends MainController
             }
             $transition["UPPER_TERM"] = $result;
             $transition["COLOR"] = Spectrum::wavelength2RGB($transition["WAVELENGTH"]);
+            $transition["upperLevel"]["CONFIG"] = $transitions[$index]->upperLevel->CONFIG;
+            $transition["lowerLevel"]["CONFIG"] = $transitions[$index]->lowerLevel->CONFIG;
             $index++;
         }
 
@@ -70,6 +61,7 @@ class SpectraController extends MainController
             'atom' => $atom,
             'atom_name' => $atom_name,
             'transitions_list' => $transitions_list,
+            'ion' => $ion,
         ]);
     }
 }
