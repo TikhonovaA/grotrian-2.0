@@ -6,4 +6,5 @@ return [
     'Levels' => 'Уровни',
     'Transitions' => 'Переходы',
     'Spectra' => 'Спектры',
+    'Charts' => 'Диаграммы',
 ];

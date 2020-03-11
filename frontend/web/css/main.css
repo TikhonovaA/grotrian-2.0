@@ -1,0 +1,106 @@
+.froam {
+    width:50%;
+    text-align:center;
+    float:left;
+}
+#panel,#panel1 {
+    background:url("/images/panel_bg.jpg") repeat-x left top #9ed4fa;
+    display: none;
+    padding:10px 0;
+}
+#panel h4 {
+    color:#FFFFFF;
+    margin-bottom:0;
+    font-size:20px;
+    font-weight: 600;
+}
+#panel .button{
+    padding: 2px 4px;
+}
+.search_form select{
+    /* width:210px;*/
+}
+td.name{
+    padding-right:10px;
+//align:"right";
+//nowrap:"nowrap";
+//valign:"middle";
+}
+td.dimension{
+    padding-left:5px;
+    font-size:13px;
+}
+.slide {
+    height:15px;
+    /*	background: #c5e6fc;*/
+    background: #9ed4fa;
+}
+
+.btn-slide {
+    background:url("../img/panel_arrow.gif") no-repeat scroll 50% -32px transparent ;
+    color:#FFFFFF;
+    display:block;
+    margin:0 auto;
+    text-align:center;
+    text-decoration:none;
+    width:100%;
+    height:100%
+}
+
+.slide:hover {
+    background: #e1f3ff;
+    background-color:#c5e6fc;
+}
+.active {
+    background-position: 50% 2px;
+    background-color:#c5e6fc;
+}
+h4{
+    margin-bottom:0;
+}
+.tpanel {
+    *background:url("../img/panel_bg.jpg") repeat-x left top #9ed4fa;
+    *padding-bottom:10px;
+}
+table .button{
+    padding: 0px 4px;
+}
+
+.button:hover {
+    text-decoration: none;
+}
+.button:active {
+    position: relative;
+
+}
+/* white */
+.white {
+    color: #606060;
+    border: solid 1px #b7b7b7;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    background: -moz-linear-gradient(top,  #fff,  #ededed);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+.white:hover {
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+    background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+.white:active {
+    color: #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+    background: -moz-linear-gradient(top,  #ededed,  #fff);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+
+.selected {
+    color: #a2262f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+    background: -moz-linear-gradient(top,  #ededed,  #fff);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+#filterBtn{
+    margin-left:0;
+}
