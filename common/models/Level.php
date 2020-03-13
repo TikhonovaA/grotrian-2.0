@@ -134,4 +134,43 @@ class Level extends ActiveRecord
         $result = preg_replace('/\@{([0])}/i', '&deg;', $result);
         return $result;
     }
+
+    public function getCellConfig()
+    {
+            $config = $this->CONFIG;
+            if ($config == "(?)") $config = "?";
+
+            //убираем с конца конфигурации, j и терма незначащие символы, такие как '?', ', "
+            $config = preg_replace('/^(.*?)([^a-zA-Z\}\)]*)$/', '$1', $config);
+
+            //убираем ~{...} c конца конфигурации
+            $config = preg_replace('/^(.*)(~\{[^\{\}]*\})$/', '$1', $config);
+            //убираем последнюю букву из конфигурации, если их там две
+            $config = preg_replace('/^(.*[a-zA-Z])[a-zA-Z]$/', '$1', $config);
+
+            //если заканчивается на @{число}, то в CELLCONFIG копируем CONFIG %@{%}
+            //если не заканчивается на @{число}, то в CELLCONFIG заносим CONFIG с заменой последнего числа на 'n'
+            $result = $config;
+
+            if (!preg_match('/^(.*@\{.*\})$/', $config)) {
+                if (preg_match('/^(.*?)(\d+)([a-z])$/', $config))
+                    $result = preg_replace('/^(.*?)(\d+)([a-z])$/', '$1n$3', $config);
+            }
+            /*            else{
+                            $item[$name] = preg_replace_callback('/^(.*?)(\d+)([a-z])@\{(\d+)\}$/',
+                                function ($matches) {
+                                    if (($matches[4] - 1)  == 1) $index = '';
+                                    else $index = '@{' . ($matches[4] - 1) . '}';
+                                    $replacement = $matches[1] . $matches[2] . $matches[3] . $index . 'n' . $matches[3];
+                                    return $replacement;
+                                },
+                                $config
+                            );
+                        }
+            */
+            if ($config == null || $config == '')
+                $result = $config = '?';
+            return $result;
+    }
+
 }
